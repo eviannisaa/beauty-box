@@ -1,13 +1,5 @@
-import { useToast } from "@/hooks/use-toast";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-
-interface Product {
-   products: Products[];
-   total: number;
-   skip: number;
-   limit: number;
-}
 
 interface Products {
    id: number;
@@ -48,8 +40,8 @@ export const ProductsProvider: React.FC<{ children: React.ReactNode }> = ({
    const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
    const [isLoading, setIsLoading] = useState(true);
    const [selectedCategory, setSelectedCategory] = useState<string>("");
-   const [bookmarkedProducts, setBookmarkedProducts] = useState<Products[]>([]);
-   const [bookmarkedIds, setBookmarkedIds] = useState<number[]>([]);
+   const [, setBookmarkedProducts] = useState<Products[]>([]);
+   const [bookmarkedIds,] = useState<number[]>([]);
 
    useEffect(() => {
       const fetchProducts = async () => {

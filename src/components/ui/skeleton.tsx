@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Card } from "./card";
 
 function Skeleton({
   className,
@@ -47,9 +46,9 @@ export const HomeSkeleton = () => {
             <Skeleton className="h-8 w-[200px]" />
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-x-5 gap-y-7">
-            {Array.from({ length: 10 })?.map((item: any, index: number) => {
+            {Array.from({ length: 10 })?.map(() => {
               return (
-                <div key={index} className="space-y-3">
+                <div className="space-y-3">
                   <Skeleton className="h-48 w-full" />
                   <Skeleton className="h-6 w-3/4" />
                   <Skeleton className="h-4 w-1/2" />
@@ -71,7 +70,7 @@ export const FormSkeleton = () => {
         <div className="grid grid-cols-2 justify-between">
           <Skeleton className="h-full w-full" />
           <div className="flex flex-col gap-y-4 p-6">
-            {Array.from({ length: 5 })?.map((item: any, index: number) => (
+            {Array.from({ length: 5 })?.map(() => (
               <Skeleton className="h-8 w-full" />
             ))}
           </div>
