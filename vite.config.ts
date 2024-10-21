@@ -10,4 +10,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    hmr: process.env.NODE_ENV !== "production",
+  },
+  build: {
+    outDir: "dist",
+  },
+  clearScreen: false,
 });

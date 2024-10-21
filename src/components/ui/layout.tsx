@@ -15,10 +15,7 @@ interface LayoutProps {
    submenus?: { label: string; active: boolean; to?: string }[];
 }
 
-const Layout: React.FC<LayoutProps> = ({
-   submenus,
-   children,
-}) => {
+const Layout: React.FC<LayoutProps> = ({ submenus, children }) => {
    return (
       <div className="w-full">
          <div className="flex justify-between items-center fixed w-full px-8 pt-10 pb-6 z-10 bg-white">
@@ -29,10 +26,10 @@ const Layout: React.FC<LayoutProps> = ({
                         <p className="font-bold text-2xl text-black">Beauty Box</p>
                      </BreadcrumbLink>
                   </BreadcrumbItem>
-                  {submenus?.map((menu, i) => (
-                     <>
+                  {submenus?.map((menu, index) => (
+                     <React.Fragment key={index}>
                         <BreadcrumbSeparator
-                           key={i}
+                           key={`separator-${index}`}
                            className={menu.active ? "text-black" : ""}
                         />
                         <BreadcrumbItem>
@@ -42,7 +39,7 @@ const Layout: React.FC<LayoutProps> = ({
                               </p>
                            </BreadcrumbLink>
                         </BreadcrumbItem>
-                     </>
+                     </React.Fragment>
                   ))}
                </BreadcrumbList>
             </Breadcrumb>

@@ -3,8 +3,8 @@ export const formatAmount = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
-      minimumFractionDigits: 2, // Set minimum decimal places
-      maximumFractionDigits: 2, // Set maximum decimal places
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(amount);
   };
 

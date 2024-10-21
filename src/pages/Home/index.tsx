@@ -108,12 +108,12 @@ const Home = () => {
                            </div>
                            <div className="flex flex-col px-3 mt-3">
                               <div className="flex justify-between">
-                                 <p className="text-[9px] bg-black w-fit text-white px-2 py-0.5 rounded-sm">
+                                 <div className="text-[9px] bg-black w-fit text-white px-2 py-0.5 rounded-sm">
                                     {item.category}
-                                 </p>
-                                 <p className="text-xs font-semibold">
+                                 </div>
+                                 <div className="text-xs font-semibold">
                                     {formatAmount(item.price)}
-                                 </p>
+                                 </div>
                               </div>
                               <a
                                  onClick={() => window.location.href = `/detail-product/${item.id}`}
@@ -136,10 +136,10 @@ const Home = () => {
                                        </>
                                     )}
                                  </p>
-                                 <p className="flex gap-2 items-center text-xs">
+                                 <div className="flex gap-2 items-center text-xs">
                                     <Rating rating={item.rating} />
-                                    <p className="text-[10px] mt-1">{item.rating}</p>
-                                 </p>
+                                    <div className="text-[10px] mt-1">{item.rating}</div>
+                                 </div>
                               </div>
                            </div>
                         </Card>
@@ -147,7 +147,7 @@ const Home = () => {
                   </div>
                ) : (
                   <div className="border rounded-lg w-full h-60 flex justify-center items-center">
-                     <p className="text-center text-sm">Data Not Found</p>
+                     <div className="text-center text-sm">Data Not Found</div>
                   </div>
                )}
             </div>

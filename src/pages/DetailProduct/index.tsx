@@ -75,10 +75,10 @@ const DetailProduct = () => {
                   <p className="font-medium capitalize text-2xl">{product?.title}</p>
 
                   <div className="flex justify-between">
-                     <p className="flex gap-2 items-center text-sm">
+                     <div className="flex gap-2 items-center text-sm">
                         <Rating rating={product?.rating!} />
-                        <p className="text-[12px] mt-1">{product?.rating}</p>
-                     </p>
+                        <div className="text-[12px] mt-1">{product?.rating}</div>
+                     </div>
                   </div>
 
                   <div className="flex justify-start gap-x-4 font-medium text-black text-xs mt-2">
@@ -88,21 +88,21 @@ const DetailProduct = () => {
                      <div className="w-fit h-fit bg-gray-300 rounded-xl px-4 py-1">
                         {product?.brand}
                      </div>
-                     <p className="w-fit h-fit bg-gray-300 rounded-xl px-4 py-1">
+                     <div className="w-fit h-fit bg-gray-300 rounded-xl px-4 py-1">
                         {product?.sku}
-                     </p>
+                     </div>
                   </div>
 
                   <p className="text-sm my-3">{product?.description}</p>
 
                   <div className="w-5/6">
                      <div className="grid grid-cols-2 items-center">
-                        <p className="font-medium text-3xl">
+                        <div className="font-medium text-3xl">
                            {formatAmount(product?.price!)}
-                        </p>
-                        <p className="text-sm">
+                        </div>
+                        <div className="text-sm">
                            {product?.discountPercentage}% Discount
-                        </p>
+                        </div>
                      </div>
                      <div className="grid grid-cols-2 items-center text-sm mt-3 text-black">
                         {/* <span>Item Quantity</span> */}

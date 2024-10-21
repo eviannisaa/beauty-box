@@ -46,9 +46,9 @@ export const HomeSkeleton = () => {
             <Skeleton className="h-8 w-[200px]" />
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-x-5 gap-y-7">
-            {Array.from({ length: 10 })?.map(() => {
+            {Array.from({ length: 10 })?.map((_, index) => {
               return (
-                <div className="space-y-3">
+                <div key={index} className="space-y-3">
                   <Skeleton className="h-48 w-full" />
                   <Skeleton className="h-6 w-3/4" />
                   <Skeleton className="h-4 w-1/2" />
@@ -70,8 +70,8 @@ export const FormSkeleton = () => {
         <div className="grid grid-cols-2 justify-between">
           <Skeleton className="h-full w-full" />
           <div className="flex flex-col gap-y-4 p-6">
-            {Array.from({ length: 5 })?.map(() => (
-              <Skeleton className="h-8 w-full" />
+            {Array.from({ length: 5 })?.map((_, index) => (
+              <Skeleton key={index} className="h-8 w-full" />
             ))}
           </div>
         </div>
