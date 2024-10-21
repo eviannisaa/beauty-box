@@ -17,7 +17,6 @@ export { Skeleton };
 
 export const LayoutSkeleton = ({
   children,
-  form,
 }: {
   children: React.ReactNode;
   form?: boolean;
@@ -25,14 +24,7 @@ export const LayoutSkeleton = ({
   return (
     <div className="w-full">
       <div className="flex justify-between items-center fixed w-full px-8 pt-10 pb-6 z-10 bg-white">
-        {form ? (
-          <Skeleton className="h-8 w-[250px]" />
-        ) : (
-          <>
-            <Skeleton className="h-8 w-[250px]" />
-            <Skeleton className="h-8 w-[250px]" />
-          </>
-        )}
+        <Skeleton className="h-8 w-[250px]" />
       </div>
       <div className="px-8">
         <div className="pb-4 pt-32">{children}</div>
@@ -72,45 +64,19 @@ export const HomeSkeleton = () => {
   );
 };
 
-export const ListSkeleton = () => {
-  return (
-    <LayoutSkeleton>
-      <div className="w-full">
-        <div className="flex justify-between items-center py-4">
-          <Skeleton className="h-8 w-[300px]" />
-          <Skeleton className="h-8 w-[200px]" />
-        </div>
-        <div className="rounded-md">
-          <Skeleton className="h-96 w-full" />
-        </div>
-        <div className="flex items-center justify-between space-x-2 py-4">
-          <Skeleton className="h-8 w-[250px]" />
-          <Skeleton className="h-8 w-[250px]" />
-        </div>
-      </div>
-    </LayoutSkeleton>
-  );
-};
-
 export const FormSkeleton = () => {
   return (
-    <LayoutSkeleton form>
-      <Card className="p-8 w-3/4 m-auto">
-        <form>
-          <div className="grid grid-cols-2 gap-y-3 gap-x-10 mb-4 items-start">
-            {Array.from({ length: 8 })?.map((item: any, index: number) => {
-              return (
-                <div key={index} className="mb-7">
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              );
-            })}
+    <LayoutSkeleton>
+      <div className="w-4/5 m-auto">
+        <div className="grid grid-cols-2 justify-between">
+          <Skeleton className="h-full w-full" />
+          <div className="flex flex-col gap-y-4 p-6">
+            {Array.from({ length: 5 })?.map((item: any, index: number) => (
+              <Skeleton className="h-8 w-full" />
+            ))}
           </div>
-          <div className="flex justify-end w-full">
-            <Skeleton className="h-8 w-[200px]" />
-          </div>
-        </form>
-      </Card>
+        </div>
+      </div>
     </LayoutSkeleton>
   );
 };

@@ -1,30 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Card } from "@/components/ui/card";
-import { useBooks } from "@/context/BooksContext";
 import SearchIcon from "../../assets/icon-search.svg";
-import { useNavigate } from "react-router-dom";
 import { HomeSkeleton } from "@/components/ui/skeleton";
+import { useProducts } from "@/context/ProductsContext";
+import { formatAmount } from "@/lib/formatAmount";
+import Rating from "@/lib/Rating";
+import { BookmarkFilledIcon, BookmarkIcon } from "@radix-ui/react-icons";
+import { useToast } from "@/hooks/use-toast";
 
 const Home = () => {
-   const navigate = useNavigate();
-   const { filteredBooks, searchBooks, isLoadingBooks } = useBooks();
+   const { toast } = useToast();
+   const { filteredProducts, isLoading, searchProducts, bookMark } =
+      useProducts();
    const [searchQuery, setSearchQuery] = useState("");
-   const [filterBy, setFilterBy] = useState<"all" | "author" | "title">("all");
    const [isSearching, setIsSearching] = useState(false);
+   const [bookmarkedIds, setBookmarkedIds] = useState<number[]>([]);
+
+   useEffect(() => {
+      const storedBookmarks = localStorage.getItem("bookmarkedIds");
+      if (storedBookmarks) {
+         setBookmarkedIds(JSON.parse(storedBookmarks));
+      }
+   }, []);
 
    const handleSearch = () => {
       setIsSearching(true);
-      searchBooks(searchQuery, filterBy);
+      searchProducts(searchQuery);
       setTimeout(() => {
          setIsSearching(false);
       }, 500);
    };
 
-   if (isLoadingBooks) {
+   const toggleBookmark = async (item: any) => {
+      await bookMark(item);
+      setBookmarkedIds((prev) => {
+         const updatedIds = prev.includes(item.id)
+            ? prev.filter(id => id !== item.id)
+            : [...prev, item.id];
+
+         localStorage.setItem("bookmarkedIds", JSON.stringify(updatedIds));
+
+         if (updatedIds.includes(item.id)) {
+            toast({ title: "Ditandai", description: `Produk ${item.title} berhasil ditandai!` });
+         } else {
+            toast({ title: "Dihapus dari Bookmark", description: `Produk ${item.title} berhasil dihapus dari bookmark!` });
+         }
+
+         return updatedIds;
+      });
+   };
+
+   if (isLoading) {
       return <HomeSkeleton />;
    }
 
@@ -37,61 +66,81 @@ const Home = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search..."
                />
-               <ToggleGroup
-                  type="single"
-                  variant="outline"
-                  value={filterBy}
-                  onValueChange={(value) =>
-                     setFilterBy(value as "all" | "author" | "title")
-                  }
-               >
-                  <ToggleGroupItem value="all">All</ToggleGroupItem>
-                  <ToggleGroupItem value="author">Author</ToggleGroupItem>
-                  <ToggleGroupItem value="title">Title</ToggleGroupItem>
-               </ToggleGroup>
                <Button onClick={handleSearch}>
                   <img src={SearchIcon} alt="search icon" className="w-6 h-6" />
                </Button>
             </div>
 
             <div>
-               {filteredBooks.length > 0 && (
-                  <div className="flex justify-between items-center mb-2">
-                     <p className="font-semibold text-lg">Fresh Read!</p>
-                     <Button
-                        variant="link"
-                        className="text-xs"
-                        onClick={() => navigate("/catalog-book")}
-                     >
-                        View more...
-                     </Button>
-                  </div>
-               )}
-
                {isSearching ? (
                   <div className="border rounded-lg w-full h-60 flex justify-center items-center">
                      <p className="text-center text-sm">Loading...</p>
                   </div>
-               ) : filteredBooks.length > 0 ? (
+               ) : filteredProducts.length > 0 ? (
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-x-5 gap-y-7">
-                     {filteredBooks.slice(0, 10).map((book, i) => (
-                        <Card key={i}>
-                           <div className="relative">
+                     {filteredProducts.map((item, i) => (
+                        <Card key={i} className="bg-gray-100 pb-4">
+                           <div className="relative bg-white rounded-t-xl">
                               <img
-                                 src={book.coverBook}
-                                 alt="book"
-                                 className="h-48 w-full object-cover rounded-t-lg"
+                                 src={item.thumbnail}
+                                 alt="product"
+                                 className="h-48 w-full rounded-t-lg object-contain"
                               />
-                              <div className="flex justify-center items-center w-6 h-6 rounded-md absolute top-2 right-3 bg-black">
+                              <div className="flex justify-center items-center w-fit h-6 px-2 rounded-sm absolute top-3 right-3 bg-black">
                                  <p className="font-medium text-xs text-white">
-                                    {book.codeBook}
+                                    {item.discountPercentage}%
                                  </p>
                               </div>
+                              <div className="flex justify-center items-center absolute bottom-2 right-3">
+                                 <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="p-1 w-fit h-fit"
+                                    onClick={() => toggleBookmark(item)}
+                                 >
+                                    {bookmarkedIds.includes(item.id) ? (
+                                       <BookmarkFilledIcon className="text-black" /> // Ikon penuh jika ditandai
+                                    ) : (
+                                       <BookmarkIcon className="text-gray-400" /> // Ikon kosong jika tidak ditandai
+                                    )}
+                                 </Button>
+                              </div>
                            </div>
-                           <div className="flex flex-col gap-y-1 p-3">
-                              <p className="font-bold text-sm">{book.title}</p>
-                              <p className="text-xs">{book.author}</p>
-                              <p className="text-xs">{book.year}</p>
+                           <div className="flex flex-col px-3 mt-3">
+                              <div className="flex justify-between">
+                                 <p className="text-[9px] bg-black w-fit text-white px-2 py-0.5 rounded-sm">
+                                    {item.category}
+                                 </p>
+                                 <p className="text-xs font-semibold">
+                                    {formatAmount(item.price)}
+                                 </p>
+                              </div>
+                              <a
+                                 onClick={() => window.location.href = `/detail-product/${item.id}`}
+                                 className="text-sm uppercase mt-2.5 hover:underline cursor-pointer"
+                              >
+                                 {item.title}
+                              </a>
+                              <div className="flex justify-between items-center mt-1">
+                                 <p className="text-xs">
+                                    {item.stock <= 5 ? (
+                                       <span className="text-gray-500">
+                                          {item.availabilityStatus}
+                                       </span>
+                                    ) : (
+                                       <>
+                                          <span className="text-gray-500">Stock </span>
+                                          <span className="font-semibold">
+                                             ({item.stock})
+                                          </span>
+                                       </>
+                                    )}
+                                 </p>
+                                 <p className="flex gap-2 items-center text-xs">
+                                    <Rating rating={item.rating} />
+                                    <p className="text-[10px] mt-1">{item.rating}</p>
+                                 </p>
+                              </div>
                            </div>
                         </Card>
                      ))}
