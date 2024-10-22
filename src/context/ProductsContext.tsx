@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 interface Products {
    id: number;
@@ -27,6 +28,8 @@ interface ProductsContextProps {
    isLoading: boolean;
    searchProducts: (q: string) => void;
    bookmarkedIds: number[];
+   setBookmarkedIds: (ids: any) => void;
+   toggleBookmark: (item: any) => void
 }
 
 const ProductsContext = createContext<ProductsContextProps | undefined>(
@@ -36,12 +39,20 @@ const ProductsContext = createContext<ProductsContextProps | undefined>(
 export const ProductsProvider: React.FC<{ children: React.ReactNode }> = ({
    children,
 }) => {
+   const { toast } = useToast();
    const [products, setProducts] = useState<Products[]>([]);
    const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
    const [isLoading, setIsLoading] = useState(true);
    const [selectedCategory, setSelectedCategory] = useState<string>("");
    const [, setBookmarkedProducts] = useState<Products[]>([]);
-   const [bookmarkedIds,] = useState<number[]>([]);
+   const [bookmarkedIds, setBookmarkedIds] = useState<number[]>([]);
+
+   useEffect(() => {
+      const storedBookmarks = localStorage.getItem("bookmarkedIds");
+      if (storedBookmarks) {
+         setBookmarkedIds(JSON.parse(storedBookmarks));
+      }
+   }, []);
 
    useEffect(() => {
       const fetchProducts = async () => {
@@ -88,6 +99,22 @@ export const ProductsProvider: React.FC<{ children: React.ReactNode }> = ({
       setBookmarkedProducts((prev) => [...prev, product]);
    };
 
+   const toggleBookmark = async (item: any) => {
+      await bookMark(item);
+      setBookmarkedIds((prev: any) => {
+         const updatedIds = prev.includes(item.id)
+            ? prev.filter((id: any) => id !== item.id)
+            : [...prev, item.id];
+         localStorage.setItem("bookmarkedIds", JSON.stringify(updatedIds));
+         if (updatedIds.includes(item.id)) {
+            toast({ title: "Ditandai", description: `Produk ${item.title} berhasil ditandai!` });
+         } else {
+            toast({ title: "Dihapus dari Bookmark", description: `Produk ${item.title} berhasil dihapus dari bookmark!` });
+         }
+         return updatedIds;
+      });
+   };
+
    return (
       <ProductsContext.Provider
          value={{
@@ -98,7 +125,9 @@ export const ProductsProvider: React.FC<{ children: React.ReactNode }> = ({
             setSelectedCategory,
             isLoading,
             searchProducts,
-            bookmarkedIds
+            bookmarkedIds,
+            setBookmarkedIds,
+            toggleBookmark,
          }}
       >
          {children}

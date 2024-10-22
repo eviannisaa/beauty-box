@@ -24,6 +24,7 @@ export const LayoutSkeleton = ({
     <div className="w-full">
       <div className="flex justify-between items-center fixed w-full px-8 pt-10 pb-6 z-10 bg-white">
         <Skeleton className="h-8 w-[250px]" />
+        <Skeleton className="h-8 w-[250px]" />
       </div>
       <div className="px-8">
         <div className="pb-4 pt-32">{children}</div>
@@ -63,7 +64,7 @@ export const HomeSkeleton = () => {
   );
 };
 
-export const FormSkeleton = () => {
+export const DetailSkeleton = () => {
   return (
     <LayoutSkeleton>
       <div className="w-4/5 m-auto">
@@ -76,6 +77,29 @@ export const FormSkeleton = () => {
           </div>
         </div>
       </div>
+    </LayoutSkeleton>
+  );
+};
+
+export const WishlistSkeleton = () => {
+  return (
+    <LayoutSkeleton>
+      <div>
+        <Skeleton className="h-8 w-full" />
+      </div>
+      <div className="grid grid-cols-3 gap-3 mt-6 max-h-[90%] overflow-y-auto">
+        {Array.from({ length: 10 })?.map((_, index) => {
+          return (
+            <div key={index} className="space-y-3">
+              <Skeleton className="h-48 w-full" />
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-1/3" />
+            </div>
+          );
+        })}
+      </div>
+
     </LayoutSkeleton>
   );
 };

@@ -9,15 +9,18 @@ import { useProducts } from "@/context/ProductsContext";
 import { formatAmount } from "@/lib/formatAmount";
 import Rating from "@/lib/Rating";
 import { BookmarkFilledIcon, BookmarkIcon } from "@radix-ui/react-icons";
-import { useToast } from "@/hooks/use-toast";
 
 const Home = () => {
-   const { toast } = useToast();
-   const { filteredProducts, isLoading, searchProducts, bookMark } =
-      useProducts();
+   const {
+      filteredProducts,
+      isLoading,
+      searchProducts,
+      bookmarkedIds,
+      setBookmarkedIds,
+      toggleBookmark,
+   } = useProducts();
    const [searchQuery, setSearchQuery] = useState("");
    const [isSearching, setIsSearching] = useState(false);
-   const [bookmarkedIds, setBookmarkedIds] = useState<number[]>([]);
 
    useEffect(() => {
       const storedBookmarks = localStorage.getItem("bookmarkedIds");
@@ -34,25 +37,6 @@ const Home = () => {
       }, 500);
    };
 
-   const toggleBookmark = async (item: any) => {
-      await bookMark(item);
-      setBookmarkedIds((prev) => {
-         const updatedIds = prev.includes(item.id)
-            ? prev.filter(id => id !== item.id)
-            : [...prev, item.id];
-
-         localStorage.setItem("bookmarkedIds", JSON.stringify(updatedIds));
-
-         if (updatedIds.includes(item.id)) {
-            toast({ title: "Ditandai", description: `Produk ${item.title} berhasil ditandai!` });
-         } else {
-            toast({ title: "Dihapus dari Bookmark", description: `Produk ${item.title} berhasil dihapus dari bookmark!` });
-         }
-
-         return updatedIds;
-      });
-   };
-
    if (isLoading) {
       return <HomeSkeleton />;
    }
@@ -60,7 +44,7 @@ const Home = () => {
    return (
       <Layout cta={true}>
          <div className="flex flex-col gap-y-5">
-            <div className="flex flex-col md:flex-row gap-3 items-center">
+            <div className="flex flex-row gap-3 items-center">
                <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -116,7 +100,9 @@ const Home = () => {
                                  </div>
                               </div>
                               <a
-                                 onClick={() => window.location.href = `/detail-product/${item.id}`}
+                                 onClick={() =>
+                                    (window.location.href = `/detail-product/${item.id}`)
+                                 }
                                  className="text-sm uppercase mt-2.5 hover:underline cursor-pointer"
                               >
                                  {item.title}

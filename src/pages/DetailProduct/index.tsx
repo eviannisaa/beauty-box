@@ -5,16 +5,13 @@ import { useParams } from "react-router-dom";
 import Rating from "../../lib/Rating";
 import { formatAmount } from "@/lib/formatAmount";
 import { Button } from "@/components/ui/button";
-import { FormSkeleton } from "@/components/ui/skeleton";
-import { useEffect, useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { useEffect } from "react";
+import { DetailSkeleton } from "@/components/ui/skeleton";
 
 const DetailProduct = () => {
    const { id } = useParams();
-   const { toast } = useToast();
-   const { products, isLoading, bookMark } = useProducts();
+   const { products, isLoading, bookmarkedIds, setBookmarkedIds, toggleBookmark } = useProducts();
    const product = products.find((item) => item.id === Number(id));
-   const [bookmarkedIds, setBookmarkedIds] = useState<number[]>([]);
 
    useEffect(() => {
       const storedBookmarkedIds = localStorage.getItem("bookmarkedIds");
@@ -24,33 +21,8 @@ const DetailProduct = () => {
    }, []);
 
    if (isLoading) {
-      return <FormSkeleton />;
+      return <DetailSkeleton />;
    }
-
-   const toggleBookmark = async (item: any) => {
-      await bookMark(item);
-      setBookmarkedIds((prev) => {
-         const updatedIds = prev.includes(item.id)
-            ? prev.filter((id) => id !== item.id)
-            : [...prev, item.id];
-
-         localStorage.setItem("bookmarkedIds", JSON.stringify(updatedIds));
-
-         if (updatedIds.includes(item.id)) {
-            toast({
-               title: "Ditandai",
-               description: `Produk ${item.title} berhasil ditandai!`,
-            });
-         } else {
-            toast({
-               title: "Dihapus dari Bookmark",
-               description: `Produk ${item.title} berhasil dihapus dari bookmark!`,
-            });
-         }
-
-         return updatedIds;
-      });
-   };
 
    const isBookmarked = bookmarkedIds.includes(product?.id!);
 
@@ -64,7 +36,7 @@ const DetailProduct = () => {
    return (
       <Layout submenus={menus}>
          <Card className="w-4/5 m-auto">
-            <div className="grid grid-cols-2 justify-between">
+            <div className="grid grid-cols-1 md:grid-cols-2 justify-between">
                <img
                   src={product?.images}
                   alt=""
@@ -81,7 +53,7 @@ const DetailProduct = () => {
                      </div>
                   </div>
 
-                  <div className="flex justify-start gap-x-4 font-medium text-black text-xs mt-2">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 font-medium text-black text-xs mt-2">
                      <div className="capitalize w-fit h-fit bg-gray-300 rounded-xl px-4 py-1">
                         #{product?.category}
                      </div>
@@ -96,7 +68,7 @@ const DetailProduct = () => {
                   <p className="text-sm my-3">{product?.description}</p>
 
                   <div className="w-5/6">
-                     <div className="grid grid-cols-2 items-center">
+                     <div className="grid grid-cols-1 gap-y-3 md:grid-cols-2 items-center">
                         <div className="font-medium text-3xl">
                            {formatAmount(product?.price!)}
                         </div>
@@ -104,7 +76,7 @@ const DetailProduct = () => {
                            {product?.discountPercentage}% Discount
                         </div>
                      </div>
-                     <div className="grid grid-cols-2 items-center text-sm mt-3 text-black">
+                     <div className="grid grid-cols-1 md:grid-cols-2 items-center text-sm mt-3 text-black">
                         {/* <span>Item Quantity</span> */}
                         <span>
                            <span className="text-gray-500">Available </span>

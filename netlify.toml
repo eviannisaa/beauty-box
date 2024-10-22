@@ -1,0 +1,14 @@
+[build]
+  publish = "dist" # Ganti dengan folder build output yang sesuai
+  command = "npm run build"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Content-Type = "text/css"
+

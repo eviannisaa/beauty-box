@@ -7,6 +7,9 @@ import {
    BreadcrumbSeparator,
 } from "./breadcrumb";
 import { Toaster } from "./toaster";
+import { Button } from "./button";
+import FavIcon from "../../assets/favorite.svg";
+import Wishlist from "@/pages/Wishlist";
 
 interface LayoutProps {
    cta?: boolean;
@@ -18,7 +21,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ submenus, children }) => {
    return (
       <div className="w-full">
-         <div className="flex justify-between items-center fixed w-full px-8 pt-10 pb-6 z-10 bg-white">
+         <div className="flex flex-row justify-between md:items-center gap-y-4 fixed w-full px-8 pt-10 pb-6 z-10 bg-white">
             <Breadcrumb>
                <BreadcrumbList>
                   <BreadcrumbItem>
@@ -43,6 +46,11 @@ const Layout: React.FC<LayoutProps> = ({ submenus, children }) => {
                   ))}
                </BreadcrumbList>
             </Breadcrumb>
+            <Wishlist>
+               <Button>
+                  <img src={FavIcon} alt="" className="w-4" /> Wishlist
+               </Button>
+            </Wishlist>
          </div>
          <div className="px-8">
             <div className="pb-4 pt-32">{children}</div>
