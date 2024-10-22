@@ -115,9 +115,9 @@ export const ProductsProvider: React.FC<{ children: React.ReactNode }> = ({
             : [...prev, item.id];
          localStorage.setItem("bookmarkedIds", JSON.stringify(updatedIds));
          if (updatedIds.includes(item.id)) {
-            toast({ title: "Ditandai", description: `Produk ${item.title} berhasil ditandai!` });
+            toast({ title: "Marked", description: `Product ${item.title} has been successfully marked!` });
          } else {
-            toast({ title: "Dihapus dari Bookmark", description: `Produk ${item.title} berhasil dihapus dari bookmark!` });
+            toast({ title: "Removed from Bookmark", description: `Product ${item.title} has been successfully removed from bookmark!` });
          }
          return updatedIds;
       });

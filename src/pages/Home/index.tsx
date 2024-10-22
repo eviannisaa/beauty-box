@@ -100,8 +100,8 @@ const Home = () => {
                                     {formatAmount(item.price)}
                                  </div>
                               </div>
-                              <Link
-                                 to="/detail-product"
+                              <a
+                                 href="/detail-product"
                                  onClick={() => {
                                     localStorage.setItem(
                                        "selectedProductId",
@@ -111,7 +111,7 @@ const Home = () => {
                                  className="text-sm uppercase mt-2.5 hover:underline cursor-pointer"
                               >
                                  {item.title}
-                              </Link>
+                              </a>
                               <div className="flex justify-between items-center mt-1">
                                  <p className="text-xs">
                                     {item.stock <= 5 ? (
