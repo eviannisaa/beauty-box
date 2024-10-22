@@ -23,7 +23,10 @@ Follow these steps to set up the project:
    ```
 
 3. **Run the application:**
+
+   ```bash
    npm run dev
+   ```
 
 4. **Access the application:**
    ➜ Local: http://localhost:5173/
