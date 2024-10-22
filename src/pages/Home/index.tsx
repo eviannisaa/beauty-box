@@ -9,6 +9,7 @@ import { useProducts } from "@/context/ProductsContext";
 import { formatAmount } from "@/lib/formatAmount";
 import Rating from "@/lib/Rating";
 import { BookmarkFilledIcon, BookmarkIcon } from "@radix-ui/react-icons";
+import { Link } from "react-router-dom";
 
 const Home = () => {
    const {
@@ -83,9 +84,9 @@ const Home = () => {
                                     onClick={() => toggleBookmark(item)}
                                  >
                                     {bookmarkedIds.includes(item.id) ? (
-                                       <BookmarkFilledIcon className="text-black" /> // Ikon penuh jika ditandai
+                                       <BookmarkFilledIcon className="text-black" />
                                     ) : (
-                                       <BookmarkIcon className="text-gray-400" /> // Ikon kosong jika tidak ditandai
+                                       <BookmarkIcon className="text-gray-400" />
                                     )}
                                  </Button>
                               </div>
@@ -99,18 +100,18 @@ const Home = () => {
                                     {formatAmount(item.price)}
                                  </div>
                               </div>
-                              <a
+                              <Link
+                                 to="/detail-product"
                                  onClick={() => {
                                     localStorage.setItem(
                                        "selectedProductId",
                                        item.id.toString(),
                                     );
-                                    window.location.href = `/detail-product`;
                                  }}
                                  className="text-sm uppercase mt-2.5 hover:underline cursor-pointer"
                               >
                                  {item.title}
-                              </a>
+                              </Link>
                               <div className="flex justify-between items-center mt-1">
                                  <p className="text-xs">
                                     {item.stock <= 5 ? (

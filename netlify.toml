@@ -4,5 +4,5 @@
 
 # Jika diperlukan, tambahkan environment variable untuk menentukan versi Node.js
 [build.environment]
-  NODE_VERSION = "18.0.0"  # Sesuaikan dengan versi Node.js proyekmu
+  NODE_VERSION = "22.9.0"  # Sesuaikan dengan versi Node.js proyekmu
 
