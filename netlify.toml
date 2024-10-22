@@ -1,23 +1,8 @@
 [build]
-  publish = "dist" # Ganti dengan folder build output yang sesuai
-  command = "npm run build"
+  publish = "dist"  # Folder build output Vite, biasanya "dist"
+  command = "npm run build"  # Perintah untuk menjalankan build
 
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Content-Type = "text/css"
-    
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
+# Jika diperlukan, tambahkan environment variable untuk menentukan versi Node.js
 [build.environment]
-  NODE_VERSION = "22.9.0"
-
+  NODE_VERSION = "18.0.0"  # Sesuaikan dengan versi Node.js proyekmu
 
