@@ -1,7 +1,6 @@
 [build]
-  publish = "/build" # Ganti dengan folder build output yang sesuai
+  publish = "dist" # Ganti dengan folder build output yang sesuai
   command = "npm run build"
-  base ="/"
 
 [[headers]]
   for = "*.js"
