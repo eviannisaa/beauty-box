@@ -100,9 +100,13 @@ const Home = () => {
                                  </div>
                               </div>
                               <a
-                                 onClick={() =>
-                                    (window.location.href = `/detail-product/${item.id}`)
-                                 }
+                                 onClick={() => {
+                                    localStorage.setItem(
+                                       "selectedProductId",
+                                       item.id.toString(),
+                                    );
+                                    window.location.href = `/detail-product`;
+                                 }}
                                  className="text-sm uppercase mt-2.5 hover:underline cursor-pointer"
                               >
                                  {item.title}

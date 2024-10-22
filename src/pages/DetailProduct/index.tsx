@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import Layout from "@/components/ui/layout";
 import { useProducts } from "@/context/ProductsContext";
-import { useParams } from "react-router-dom";
 import Rating from "../../lib/Rating";
 import { formatAmount } from "@/lib/formatAmount";
 import { Button } from "@/components/ui/button";
@@ -9,9 +8,16 @@ import { useEffect } from "react";
 import { DetailSkeleton } from "@/components/ui/skeleton";
 
 const DetailProduct = () => {
-   const { id } = useParams();
-   const { products, isLoading, bookmarkedIds, setBookmarkedIds, toggleBookmark } = useProducts();
+   const {
+      products,
+      isLoading,
+      bookmarkedIds,
+      setBookmarkedIds,
+      toggleBookmark,
+   } = useProducts();
+   const id = localStorage.getItem("selectedProductId");
    const product = products.find((item) => item.id === Number(id));
+   const isBookmarked = bookmarkedIds.includes(product?.id!);
 
    useEffect(() => {
       const storedBookmarkedIds = localStorage.getItem("bookmarkedIds");
@@ -23,8 +29,6 @@ const DetailProduct = () => {
    if (isLoading) {
       return <DetailSkeleton />;
    }
-
-   const isBookmarked = bookmarkedIds.includes(product?.id!);
 
    const menus = [
       {
@@ -77,7 +81,6 @@ const DetailProduct = () => {
                         </div>
                      </div>
                      <div className="grid grid-cols-1 md:grid-cols-2 items-center text-sm mt-3 text-black">
-                        {/* <span>Item Quantity</span> */}
                         <span>
                            <span className="text-gray-500">Available </span>
                            <span className="text-black font-medium">

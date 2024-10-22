@@ -18,7 +18,8 @@ interface WishlistProps {
 }
 
 const Wishlist: React.FC<WishlistProps> = ({ children }) => {
-   const { filteredProducts, bookmarkedIds, toggleBookmark, isLoading } = useProducts();
+   const { filteredProducts, bookmarkedIds, toggleBookmark, isLoading } =
+      useProducts();
    const [bookmarkedProducts, setBookmarkedProducts] = useState<any[]>([]);
 
    useEffect(() => {
@@ -35,16 +36,14 @@ const Wishlist: React.FC<WishlistProps> = ({ children }) => {
    return (
       <div>
          <Sheet>
-            <SheetTrigger asChild>
-               {children}
-            </SheetTrigger>
+            <SheetTrigger asChild>{children}</SheetTrigger>
             <SheetContent>
                <SheetHeader>
                   <SheetTitle>Wishlist</SheetTitle>
                </SheetHeader>
-               <div className="grid grid-cols-3 gap-3 mt-6 max-h-[90%] overflow-y-auto">
-                  {bookmarkedProducts.length > 0 ? (
-                     bookmarkedProducts.map((item, i) => (
+               {bookmarkedProducts.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-3 mt-6 max-h-[90%] overflow-y-auto">
+                     {bookmarkedProducts.map((item, i) => (
                         <Card key={i} className="bg-gray-100 pb-2">
                            <div className="relative bg-white rounded-t-xl">
                               <img
@@ -81,11 +80,13 @@ const Wishlist: React.FC<WishlistProps> = ({ children }) => {
                               </div>
                            </div>
                         </Card>
-                     ))
-                  ) : (
-                     <p className="text-center">No bookmarks found.</p>
-                  )}
-               </div>
+                     ))}
+                  </div>
+               ) : (
+                  <div className="w-full h-96 flex justify-center items-center">
+                     No bookmarks found.
+                  </div>
+               )}
             </SheetContent>
          </Sheet>
       </div>
