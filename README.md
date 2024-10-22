@@ -31,5 +31,8 @@ Follow these steps to set up the project:
 4. **Access the application:**
    ➜ Local: http://localhost:5173/
 
+<br>
+
 Thank you for visiting! I hope you find this information useful and helpful!
+<br>
 Happy Hacking! 💻✨
