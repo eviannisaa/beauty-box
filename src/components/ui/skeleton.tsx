@@ -67,13 +67,31 @@ export const HomeSkeleton = () => {
 export const DetailSkeleton = () => {
   return (
     <LayoutSkeleton>
-      <div className="w-4/5 m-auto">
-        <div className="grid grid-cols-2 justify-between">
+      <div className="w-3/4 m-auto">
+        <div className="grid grid-cols-2 justify-between p-6">
           <Skeleton className="h-full w-full" />
           <div className="flex flex-col gap-y-4 p-6">
             {Array.from({ length: 5 })?.map((_, index) => (
               <Skeleton key={index} className="h-8 w-full" />
             ))}
+          </div>
+        </div>
+        <div className="p-6">
+          <hr />
+          <div className="my-8">
+            <Skeleton className="h-8 w-1/3" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
+            {Array.from({ length: 10 })?.map((_, index) => {
+              return (
+                <div key={index} className="space-y-3">
+                  <Skeleton className="h-48 w-full" />
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-4 w-1/3" />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -99,7 +117,6 @@ export const WishlistSkeleton = () => {
           );
         })}
       </div>
-
     </LayoutSkeleton>
   );
 };

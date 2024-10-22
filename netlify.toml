@@ -1,6 +1,7 @@
 [build]
-  publish = "dist" # Ganti dengan folder build output yang sesuai
+  publish = "/build" # Ganti dengan folder build output yang sesuai
   command = "npm run build"
+  base ="/"
 
 [[headers]]
   for = "*.js"
@@ -11,4 +12,9 @@
   for = "*.css"
   [headers.values]
     Content-Type = "text/css"
+    
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 

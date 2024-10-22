@@ -48,7 +48,8 @@ const Layout: React.FC<LayoutProps> = ({ submenus, children }) => {
             </Breadcrumb>
             <Wishlist>
                <Button>
-                  <img src={FavIcon} alt="" className="w-4" /> Wishlist
+                  <img src={FavIcon} alt="" className="w-4" />{" "}
+                  <span className="hidden md:block">Wishlist</span>
                </Button>
             </Wishlist>
          </div>
