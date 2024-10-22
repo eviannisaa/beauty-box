@@ -1,27 +1,32 @@
-# Beauty Box
-
 ## Prerequisites
 
-Sebelum memulai, pastikan Anda telah menginstal hal-hal berikut:
+Before getting started, make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/)
 - npm
 
-## Instalasi
+## Installation
 
-Ikuti langkah-langkah berikut untuk menginstal proyek:
+Follow these steps to set up the project:
 
-1. **Clone repositori**:
+1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/username/repo-name.git
    cd repo-name
+   ```
+
+2. **Install dependencies**
+
+   ```bash
    npm install
+   ```
+
+3. **Run the application:**
    npm run dev
 
-Silakan sesuaikan bagian "Nama Proyek" dan informasi lainnya dengan detail proyek Anda.
+4. **Access the application:**
+   ➜ Local: http://localhost:5173/
 
-Happy Hacking !
-
-
-
-
+Thank you for visiting! I hope you find this information useful and helpful!
+Happy Hacking! 💻✨
